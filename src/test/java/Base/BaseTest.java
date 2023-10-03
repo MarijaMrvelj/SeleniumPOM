@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
+import java.io.IOException;
 import java.time.Duration;
 
 public class BaseTest {
@@ -21,9 +22,10 @@ public class BaseTest {
     public PracticePage practicePage;
     public LoginPage loginPage;
     public ProfilePage profilePage;
+    public ExcelReader excelReader;
 
     @BeforeClass
-    public void setUp() {
+    public void setUp() throws IOException {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         wait = new WebDriverWait(driver, Duration.ofSeconds(15));
@@ -33,12 +35,11 @@ public class BaseTest {
         practicePage = new PracticePage(driver, wait);
         loginPage = new LoginPage(driver, wait);
         profilePage = new ProfilePage(driver, wait);
+        excelReader = new ExcelReader("src/test/java/TestData.xlsx");
     }
 
     @AfterClass
     public void tearDown() {
         driver.quit();
     }
-
-
 }
