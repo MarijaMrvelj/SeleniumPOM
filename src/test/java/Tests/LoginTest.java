@@ -19,6 +19,7 @@ public class LoginTest extends BaseTest {
         loginPage.inputUsername("student");
         loginPage.inputPassword("Password123");
         loginPage.clickOnSubmit();
+
         Assert.assertTrue(profilePage.getLogoutButton().isDisplayed());
         Assert.assertTrue(profilePage.getMessage().isDisplayed());
     }
@@ -30,9 +31,15 @@ public class LoginTest extends BaseTest {
         loginPage.inputUsername("");
         loginPage.inputPassword("Password123");
         loginPage.clickOnSubmit();
+
         Assert.assertTrue(loginPage.getError().isDisplayed());
-        String expectedURL = "https://practicetestautomation.com/practice-test-login/";
-        Assert.assertEquals(driver.getCurrentUrl(), expectedURL);
+        Assert.assertEquals(driver.getCurrentUrl(), loginPage.pageUrl());
+        boolean logOut = false;
+        try {
+            profilePage.getLogoutButton().isDisplayed();
+        } catch (Exception e) {
+            Assert.assertFalse(logOut);
+        }
     }
 
     @Test
@@ -42,8 +49,15 @@ public class LoginTest extends BaseTest {
         loginPage.inputUsername("student");
         loginPage.inputPassword("");
         loginPage.clickOnSubmit();
+
         Assert.assertTrue(loginPage.getError().isDisplayed());
         Assert.assertEquals(driver.getCurrentUrl(), loginPage.pageUrl());
+        boolean logOut = false;
+        try {
+            profilePage.getLogoutButton().isDisplayed();
+        } catch (Exception e) {
+            Assert.assertFalse(logOut);
+        }
     }
 
     @Test
@@ -53,8 +67,15 @@ public class LoginTest extends BaseTest {
         loginPage.inputUsername("");
         loginPage.inputPassword("");
         loginPage.clickOnSubmit();
+
         Assert.assertTrue(loginPage.getError().isDisplayed());
         Assert.assertEquals(driver.getCurrentUrl(), loginPage.pageUrl());
+        boolean logOut = false;
+        try {
+            profilePage.getLogoutButton().isDisplayed();
+        } catch (Exception e) {
+            Assert.assertFalse(logOut);
+        }
     }
 
     @Test
@@ -64,8 +85,15 @@ public class LoginTest extends BaseTest {
         loginPage.inputUsername("studnt");
         loginPage.inputPassword("Password123");
         loginPage.clickOnSubmit();
+
         Assert.assertTrue(loginPage.getError().isDisplayed());
         Assert.assertEquals(driver.getCurrentUrl(), loginPage.pageUrl());
+        boolean logOut = false;
+        try {
+            profilePage.getLogoutButton().isDisplayed();
+        } catch (Exception e) {
+            Assert.assertFalse(logOut);
+        }
     }
 
     @Test
@@ -75,8 +103,15 @@ public class LoginTest extends BaseTest {
         loginPage.inputUsername("student");
         loginPage.inputPassword("password234");
         loginPage.clickOnSubmit();
+
         Assert.assertTrue(loginPage.getError().isDisplayed());
         Assert.assertEquals(driver.getCurrentUrl(), loginPage.pageUrl());
+        boolean logOut = false;
+        try {
+            profilePage.getLogoutButton().isDisplayed();
+        } catch (Exception e) {
+            Assert.assertFalse(logOut);
+        }
     }
 
     @Test
@@ -88,7 +123,10 @@ public class LoginTest extends BaseTest {
         loginPage.clickOnSubmit();
         profilePage.clickOnLogoutButton();
 
-        //Jos asertacije
+        Assert.assertEquals(driver.getCurrentUrl(), loginPage.pageUrl());
+        Assert.assertEquals(loginPage.getUsernameField().getText(), "");
+        Assert.assertEquals(loginPage.getPasswordField().getText(), "");
+        Assert.assertTrue(loginPage.getSubmitButton().isDisplayed());
     }
 
 }
